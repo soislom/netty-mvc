@@ -16,14 +16,16 @@ import io.netty.handler.stream.ChunkedWriteHandler;
 
 public abstract class Application {
 
-	private static Application instance = new Application() {};
+	private static Application instance = new Application() {
+	};
 
-	private Application() {}
+	private Application() {
+	}
 
 	public static Application getInstance() {
 		return instance;
 	}
-	
+
 	public void run() throws InterruptedException {
 		run(Constant.DEFAULT_PORT);
 	}
@@ -53,14 +55,19 @@ public abstract class Application {
 		ChannelInitializer<SocketChannel> channelInitializer = new ChannelInitializer<SocketChannel>() {
 			@Override
 			protected void initChannel(SocketChannel ch) throws Exception {
-				ChannelPipeline pipeline = ch.pipeline();
-				pipeline.addLast(new HttpServerCodec());
-				pipeline.addLast(new HttpObjectAggregator(65536));
-				pipeline.addLast(new ChunkedWriteHandler());
-				pipeline.addLast(new ApplicationHandler());
+				initChannelPipeline(ch);
 			}
+
 		};
 		return channelInitializer;
+	}
+
+	private void initChannelPipeline(SocketChannel ch) {
+		ChannelPipeline pipeline = ch.pipeline();
+		pipeline.addLast(new HttpServerCodec());
+		pipeline.addLast(new HttpObjectAggregator(65536));
+		pipeline.addLast(new ChunkedWriteHandler());
+		pipeline.addLast(new ApplicationHandler());
 	}
 
 	private void close(EventLoopGroup... eventLoopGroups) {
