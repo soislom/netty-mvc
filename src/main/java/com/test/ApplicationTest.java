@@ -1,8 +1,10 @@
 package com.test;
 
 import cn.netty.mvc.Application;
+import cn.netty.mvc.annotation.Controller;
 
-public class ApplicationTest {
+@Controller
+public class ApplicationTest{
 
 	public static void main(String[] args) throws InterruptedException {
 		Application.getInstance().run();

@@ -1,15 +1,17 @@
 package cn.netty.mvc.factory;
 
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
+import java.lang.reflect.Method;
 
-@Aspect
-public class ControllerAdvice {
+import net.sf.cglib.proxy.MethodInterceptor;
+import net.sf.cglib.proxy.MethodProxy;
 
-	@Around("@annotation(cn.netty.mvc.annotation.Controller)")
-	public void arroundAdvice(ProceedingJoinPoint point) {
-//		MethodSignature methodSignature = (MethodSignature) point.getSignature();
-		
+public class ControllerAdvice implements MethodInterceptor{
+
+	public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy) throws Throwable {
+		System.out.println("这里是对目标类进行增强！！！");
+        //注意这里的方法调用，不是用反射哦！！！
+        Object object = proxy.invokeSuper(obj, args);
+		return object;
 	}
+
 }

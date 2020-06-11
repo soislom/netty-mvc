@@ -2,6 +2,7 @@ package cn.netty.mvc;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.EventLoopGroup;
@@ -16,11 +17,9 @@ import io.netty.handler.stream.ChunkedWriteHandler;
 
 public abstract class Application {
 
-	private static Application instance = new Application() {
-	};
+	private static Application instance = new Application() {};
 
-	private Application() {
-	}
+	private Application() {}
 
 	public static Application getInstance() {
 		return instance;
@@ -36,7 +35,9 @@ public abstract class Application {
 
 		try {
 			ServerBootstrap bootstrap = serverBootstrap(boss, work);
-			Channel channel = bootstrap.bind(port).sync().channel();
+			ChannelFuture channelFuture = bootstrap.bind(port).sync();
+			channelFuture.addListener(new ControllerListener());
+			Channel channel = channelFuture.channel();
 			System.out.println("Open you brower and navigate to http://127.0.0.1:" + port + "/");
 			channel.closeFuture().sync();
 		} finally {

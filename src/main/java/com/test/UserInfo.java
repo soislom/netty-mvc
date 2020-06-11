@@ -8,6 +8,17 @@ public class UserInfo {
 	
 	private String password;
 
+	public UserInfo() {
+		super();
+	}
+
+	public UserInfo(int id, String name, String password) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.password = password;
+	}
+
 	@Override
 	public String toString() {
 		return "UserInfo [id=" + id + ", name=" + name + ", password=" + password + "]";
