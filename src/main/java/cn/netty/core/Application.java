@@ -60,14 +60,19 @@ public abstract class Application {
 		ChannelInitializer<SocketChannel> channelInitializer = new ChannelInitializer<SocketChannel>() {
 			@Override
 			protected void initChannel(SocketChannel ch) throws Exception {
-				ChannelPipeline pipeline = ch.pipeline();
-				pipeline.addLast(new HttpServerCodec());
-				pipeline.addLast(new HttpObjectAggregator(65536));
-				pipeline.addLast(new ChunkedWriteHandler());
-				pipeline.addLast(new ApplicationHandler());
+				initChannelPipeline(ch);
 			}
+
 		};
 		return channelInitializer;
+	}
+
+	private void initChannelPipeline(SocketChannel ch) {
+		ChannelPipeline pipeline = ch.pipeline();
+		pipeline.addLast(new HttpServerCodec());
+		pipeline.addLast(new HttpObjectAggregator(65536));
+		pipeline.addLast(new ChunkedWriteHandler());
+		pipeline.addLast(new ApplicationHandler());
 	}
 
 	private void close(EventLoopGroup... eventLoopGroups) {
