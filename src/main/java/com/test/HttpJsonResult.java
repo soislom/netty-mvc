@@ -2,7 +2,7 @@ package com.test;
 
 import io.netty.handler.codec.http.FullHttpResponse;
 
-public class HttpJsonResult implements cn.netty.core.Controller{
+public class HttpJsonResult{
 
 	private FullHttpResponse response;
 	
