@@ -1,5 +1,5 @@
 package cn.netty.core.enume;
 
-public enum HttpMthod {
+public enum HttpMethod {
 	GET, POST, PUT, DELETE, OPTION
 }

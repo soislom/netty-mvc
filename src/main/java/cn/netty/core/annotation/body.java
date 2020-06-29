@@ -7,16 +7,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import cn.netty.core.enume.HttpMthod;
-
-@Target(ElementType.METHOD)
+@Target(ElementType.PARAMETER)
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @Documented
-public @interface Url {
-
-	String name() default "/";
-	
-	HttpMthod method() default HttpMthod.GET;
+public @interface body {
 
 }

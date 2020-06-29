@@ -18,22 +18,15 @@ import io.netty.handler.stream.ChunkedWriteHandler;
 
 public abstract class Application {
 
-	private static Application instance = new Application() {
-	};
-
-	private Application() {
+	public Application() {
 		new ControllerAdvice();
 	}
 
-	public static Application getInstance() {
-		return instance;
-	}
-
-	public void run() throws InterruptedException {
+	public static void run() throws InterruptedException {
 		run(Constant.DEFAULT_PORT);
 	}
 
-	public void run(int port) throws InterruptedException {
+	public static void run(int port) throws InterruptedException {
 		EventLoopGroup boss = new NioEventLoopGroup();
 		EventLoopGroup work = new NioEventLoopGroup();
 
@@ -49,14 +42,14 @@ public abstract class Application {
 		}
 	}
 
-	protected ServerBootstrap serverBootstrap(EventLoopGroup boss, EventLoopGroup work) {
+	protected static ServerBootstrap serverBootstrap(EventLoopGroup boss, EventLoopGroup work) {
 		ServerBootstrap b = new ServerBootstrap();
 		b.group(boss, work).channel(NioServerSocketChannel.class).handler(new LoggingHandler(LogLevel.INFO))
 				.childHandler(channelInitializer());
 		return b;
 	}
 
-	protected ChannelInitializer<SocketChannel> channelInitializer() {
+	protected static ChannelInitializer<SocketChannel> channelInitializer() {
 		ChannelInitializer<SocketChannel> channelInitializer = new ChannelInitializer<SocketChannel>() {
 			@Override
 			protected void initChannel(SocketChannel ch) throws Exception {
@@ -67,7 +60,7 @@ public abstract class Application {
 		return channelInitializer;
 	}
 
-	private void initChannelPipeline(SocketChannel ch) {
+	private static void initChannelPipeline(SocketChannel ch) {
 		ChannelPipeline pipeline = ch.pipeline();
 		pipeline.addLast(new HttpServerCodec());
 		pipeline.addLast(new HttpObjectAggregator(65536));
@@ -75,7 +68,7 @@ public abstract class Application {
 		pipeline.addLast(new ApplicationHandler());
 	}
 
-	private void close(EventLoopGroup... eventLoopGroups) {
+	private static void close(EventLoopGroup... eventLoopGroups) {
 		if (eventLoopGroups.length == 0)
 			throw new NullPointerException();
 		for (EventLoopGroup eventLoopGroup : eventLoopGroups) {

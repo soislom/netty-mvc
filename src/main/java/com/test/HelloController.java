@@ -2,12 +2,11 @@ package com.test;
 
 import cn.netty.core.Controller;
 import cn.netty.core.annotation.Action;
-import cn.netty.core.annotation.Url;
+import cn.netty.core.annotation.Path;
 
-@Action()
-public class HelloController implements Controller{
+public class HelloController{
 	
-	@Url(name ="/")
+	@Path("/")
 	public Object hello() {
 		System.out.println("this is hello world");
 		UserInfo userInfo = new UserInfo();

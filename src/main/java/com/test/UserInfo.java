@@ -9,6 +9,11 @@ public class UserInfo {
 	private String password;
 
 	@Override
+	public String toString() {
+		return "UserInfo [id=" + id + ", name=" + name + ", password=" + password + "]";
+	}
+
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
