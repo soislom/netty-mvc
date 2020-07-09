@@ -23,7 +23,7 @@ public abstract class Application {
 	}
 
 	public static void run() throws InterruptedException {
-		run(Constant.DEFAULT_PORT);
+		run(Constant.PORT);
 	}
 
 	public static void run(int port) throws InterruptedException {

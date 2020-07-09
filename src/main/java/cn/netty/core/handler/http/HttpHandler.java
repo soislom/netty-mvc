@@ -13,10 +13,9 @@ import java.util.logging.Logger;
 
 import com.alibaba.fastjson.JSON;
 
-import cn.netty.core.Controller;
 import cn.netty.core.annotation.Param;
 import cn.netty.core.annotation.Path;
-import cn.netty.core.annotation.body;
+import cn.netty.core.annotation.Body;
 import cn.netty.core.enume.HttpMethod;
 import cn.netty.core.exception.HttpMethodException;
 import cn.netty.core.exception.HttpUrlException;
@@ -42,7 +41,7 @@ public class HttpHandler {
 
 	private static final Logger LOGGER = Logger.getLogger(HttpHandler.class.getName());
 
-	public static final Map<String, Class<? extends Controller>> routerMap = new ConcurrentHashMap<String, Class<? extends Controller>>();
+	public static final Map<String, Class<?>> routerMap = new ConcurrentHashMap<String, Class<?>>();
 
 	public static final Map<String, Map<HttpMethod, Method>> urlMappings = new LinkedHashMap<String, Map<HttpMethod, Method>>();
 
@@ -89,8 +88,8 @@ public class HttpHandler {
 	 * @param uri
 	 * @return
 	 */
-	private static Class<? extends Controller> checkUrl(String uri) {
-		Class<? extends Controller> class1 = routerMap.get(uri);
+	private static Class<?> checkUrl(String uri) {
+		Class<?> class1 = routerMap.get(uri);
 		if (class1 == null) {
 			throw new HttpUrlException("uri:" + uri + "²»´æÔÚ");
 		}
@@ -107,7 +106,7 @@ public class HttpHandler {
 	 * @throws Exception
 	 */
 	private static Object getMapping(String uri, HttpMethod httpMethod, Map<String, Object> params) throws Exception {
-		Class<? extends Controller> checkUrl = checkUrl(uri);
+		Class<?> checkUrl = checkUrl(uri);
 		for (Method method : checkUrl.getMethods()) {
 			Path url = method.getAnnotation(Path.class);
 			String name = uri + url.value();
@@ -142,7 +141,7 @@ public class HttpHandler {
 	 */
 	private static Object postMapping(String uri, HttpMethod httpMethod, Map<String, Object> params,
 			Map<String, Object> bodyParams) throws Exception {
-		Class<? extends Controller> checkUrl = checkUrl(uri);
+		Class<?> checkUrl = checkUrl(uri);
 		for (Method method : checkUrl.getMethods()) {
 			Path url = method.getAnnotation(Path.class);
 			String name = uri + url.value();
@@ -158,7 +157,7 @@ public class HttpHandler {
 							methodParamList.add(params.get(key));
 						}
 					}
-					if (parameters[i].getAnnotation(body.class) != null) {
+					if (parameters[i].getAnnotation(Body.class) != null) {
 						Object parseObject = JSON.parseObject(JSON.toJSONString(bodyParams), parameterTypes[i]);
 						methodParamList.add(parseObject);
 					}

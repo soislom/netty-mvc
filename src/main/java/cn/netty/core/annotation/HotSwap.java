@@ -11,7 +11,8 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @Documented
-public @interface Action {
+public @interface HotSwap {
 
-	String value() default "/";
+	boolean value() default true;
+
 }
