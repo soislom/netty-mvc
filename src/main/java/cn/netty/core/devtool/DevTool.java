@@ -2,8 +2,6 @@ package cn.netty.core.devtool;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 
 /**
  * hot devloyment
@@ -12,8 +10,6 @@ import java.util.concurrent.ScheduledExecutorService;
  *
  */
 public class DevTool extends ClassLoader {
-
-	private static final ScheduledExecutorService SCHEDULEDEXECUTORSERVICE = Executors.newScheduledThreadPool(1);
 
 	public DevTool() {
 		System.out.println("load netty devtool");

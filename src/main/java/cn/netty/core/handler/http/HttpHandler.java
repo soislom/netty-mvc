@@ -37,8 +37,6 @@ import io.netty.util.CharsetUtil;
 
 public class HttpHandler {
 
-//	private static final String ALL_REGEX = "[\\d\\D]";
-
 	private static final Logger LOGGER = Logger.getLogger(HttpHandler.class.getName());
 
 	public static final Map<String, Class<?>> routerMap = new ConcurrentHashMap<String, Class<?>>();
@@ -113,7 +111,7 @@ public class HttpHandler {
 			if (name.startsWith(uri) && url.method().equals(httpMethod)) {
 				Parameter[] parameters = method.getParameters();
 
-				List<Object> methodParamList = new Vector<>();
+				List<Object> methodParamList = new Vector<Object>();
 
 				for (Parameter parameter : parameters) {
 					for (String key : params.keySet()) {
@@ -148,7 +146,7 @@ public class HttpHandler {
 			if (name.startsWith(uri) && url.method().equals(httpMethod)) {
 				Parameter[] parameters = method.getParameters();
 				Class<?>[] parameterTypes = method.getParameterTypes();
-				List<Object> methodParamList = new Vector<>();
+				List<Object> methodParamList = new Vector<Object>();
 
 				for (int i = 0; i < parameters.length; i++) {
 					for (String key : params.keySet()) {
